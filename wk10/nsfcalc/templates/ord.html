@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    ORD
+{% endblock %}
+
+{% block main %}
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+   <script>
+      document.addEventListener("DOMContentLoaded", function() {
+         let date = document.querySelector("#date");
+         console.log(date.value);
+         date.addEventListener('change', async function(){
+            let response = await fetch('/ord_date?ord_date=' + date.value);
+            let ord = await response.text();
+            document.querySelector('text').innerHTML = ord;
+         });
+      });
+   </script>
+   <h1>ORD CALCULATOR</h1>
+   <table class="table center_object" style="width:50%">
+      <tr>
+         <th><label for="date" style="font-size: 18pt; height: 40px; width:150px;">ORD DATE:</label></th>
+         <th><input type="date" id="date" style="border:none; font-size: 18pt; height: 40px; width:165px;"></th>
+      </tr>
+   </table>
+   <p>
+      <h2 style="font-weight:normal">{{username}}'s Freedom</h2>
+      <text></text>
+   </p>
+
+{% endblock %}

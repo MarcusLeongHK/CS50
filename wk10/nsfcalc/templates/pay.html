@@ -1,0 +1,152 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script>
+        $(function load_values(){
+            $.ajax({
+            url: "/update_gen_values",
+            type: "POST",
+            dataType: "json",
+            success: function(data){
+                $("#general_data").replaceWith(values)
+            }
+        });
+            $.ajax({
+            url: "/update_rank_values",
+            type: "POST",
+            dataType: "json",
+            success: function(data){
+                $("#rank_data").replaceWith(values)
+            }
+        });
+    });
+
+    function fetch()
+    {
+        var get_1 = document.querySelector("#get_1").value;
+        document.querySelector("#put_1").value = get_1;
+        var get_2 = document.querySelector("#get_2").value;
+        document.querySelector("#put_2").value = get_2;
+        var get_3 = document.querySelector("#get_3").value;
+        document.querySelector("#put_3").value = get_3;
+        var get_4 = document.querySelector("#get_4").value;
+        document.querySelector("#put_4").value = get_4;
+    }
+    </script>
+    <h1>PAY CALCULATOR</h1>
+    <h1 class="display-4">Hi {{username}}</h1>
+    <form method="post" action="/">
+        <p>
+        <select name="duration" class="form-select center_object" style="max-width:80%" required>
+            <option disabled selected>DURATION</option>
+            <option value="22">22 MONTHS [ENHANCED]</option>
+            <option value="24">24 MONTHS [NORMAL]</option>
+        </select>
+        </p>
+        <p>
+            <select name="pathway" class="form-select center_object" style="max-width:80%" required>
+                <option disabled selected>PATHWAY</option>
+                <option value="MAN">UNIT</option>
+                <option value="SGT">SERGEANT</option>
+                <option value="OFFICER">OFFICER</option>
+            </select>
+        </p>
+        <p>
+            <select name="vocation" class="form-select center_object" style="max-width:80%" required>
+                <option disabled selected>VOCATION</option>
+                <option value="SERVICE/TECHNICAL">SERVICE/TECHNICAL</option>
+                <option value="SUPPORT COMBATANT">SUPPORT COMBATANTS</option>
+                <option value="AIRCREW, ARMOUR, GUARDS, INFANTRY, COMBAT MEDICS, SEAGOING">AIRCREW, ARMOUR, GUARDS, INFANTRY, COMBAT MEDICS, SEAGOING</option>
+                <option value="CBRD/EOD, COMMANDO, NAVAL DIVER">CBRD/EOD, COMMANDO, NAVAL DIVER</option>
+        </select>
+        </p>
+        <button class="btn btn-primary center_object" type="submit" style="margin-right:20px">CONTINUE</button>
+    </form>
+    <br>
+    <form action="/logout">
+        <button class="btn btn-danger center_object" type="submit" style="margin-right:20px">RESET</button>
+    </form>
+    <div id="general_data">
+        <table class="table center_object">
+            <tr>
+                <th>DURATION</th>
+                <th>PATHWAY</th>
+            </tr>
+            <tr>
+                <td>{{duration}} MONTHS</td>
+                <td>{{pathway}}</td>
+            </tr>
+        </table>
+        <table class="table center_object">
+            <tr>
+                <th>VOCATION</th>
+            </tr>
+            <tr>
+                <td>{{voc}}</td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <div class="strong" style="font-size:30px;font-style:bold">PHASES</div>
+        <form method="post" action="/calculate">
+            <label for="customRange2" class="form-label">BMT</label>
+            <br>
+            <input name="bmt" id="get_1" type="range" class="form-range" min="2" max="5" id="customRange2" style="width: 300px" value="2" oninput="fetch()">
+            <div>
+                <input id="put_1" class="center_object" type="text" disabled style="border:none"> MONTHS
+            </div>
+            <br>
+            <select name="bmt_rank" class="form-select" style="width:200px;padding:10px;margin:auto">
+                <option selected disabled>RANK</option>
+                <option value="580">REC</option>
+            </select>
+            <br>
+            <label for="customRange2" class="form-label">TRAINING/VOCATIONAL SCHOOL</label>
+            <br>
+            <input name="school" id="get_2" type="range" class="form-range" min="0" max="24" id="customRange2" style="width: 300px" value="0" oninput="fetch()">
+            <div>
+                <input id="put_2" class="center_object" type="text" disabled style="border:none"> MONTHS
+            </div>
+            <br>
+            <select name="school_rank" class="form-select" aria-label="RANK" style="width:200px;padding:10px;margin:auto">
+                <option selected disabled>RANK</option>
+                {% for rank in pay %}
+                <option value="{{pay[rank]}}">{{rank}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="customRange2" class="form-label">UNIT</label> <br>
+            <input name="unit" id="get_3" type="range" class="form-range" min="0" max="24" id="customRange2" style="width: 300px" value="0" onchange="fetch()">
+            <div>
+                <input id="put_3" class="center_object put" type="text" disabled style="border:none"> MONTHS
+            </div>
+            <br>
+            <select name="unit_rank" class="form-select" style="width:200px;padding:10px;margin:auto">
+                <option selected disabled>RANK</option>
+                {% for rank in pay %}
+                    <option value="{{pay[rank]}}">{{rank}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="customRange2" class="form-label">UNIT [AFTER PROMOTION]</label> <br>
+            <input name="unit_2" id="get_4" type="range" class="form-range" min="0" max="24" id="customRange2" style="width: 300px" value="0" onchange="fetch()">
+            <div>
+                <input id="put_4" class="center_object put" type="text" disabled style="border:none"> MONTHS
+            </div>
+            <br>
+            <select name="unit2_rank" class="form-select" style="width:200px;padding:10px;margin:auto">
+                <option selected disabled>RANK</option>
+                {% for rank in pay %}
+                <option value="{{pay[rank]}}">{{rank}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <button class="btn btn-success center_object" type="submit">CALCULATE!</button>
+        </form>
+    </div>
+{% endblock %}

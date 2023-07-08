@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Welcome
+{% endblock %}
+
+{% block main %}
+    <form action="/login" method="post">
+        <div class="form-group">
+            <h3><label for="username">Type In Your Name:</label></h3>
+            <input class="form-control center_object" name="username" autofocus type="text" placeholder="Name" style="font-size:20px;width:25%">
+            <br>
+            <button type="submit" class="btn btn-secondary">CONTINUE</button>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+{% block main %}
+    <form action="/sell" method="post">
+        <select name="symbol">
+            <option value="blank" disabled>Symbol</option>
+            {% if shares != NONE %}
+                <option value="{{shares}}" selected>{{shares}}</option>
+            {% else %}
+                {% for stock in stocks %}
+                    <option value="{{stock.stock}}">{{stock.stock}}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+        {% if quantity != NONE %}
+            <input type="disabled" name="shares" placeholder="{{quantity}}" value="{{quantity}}">
+        {% else %}
+            <input type="number" name="shares" placeholder="Quantity">
+        {% endif %}
+        <button type="submit">Sell</button>
+    </form>
+{% endblock %}

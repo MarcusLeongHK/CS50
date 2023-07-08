@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy
+{% endblock %}
+
+{% block main %}
+    <form action="/buy" method="post" autocomplete="off" autofocus>
+        {% if shares != NONE %}
+        <select name="symbol">
+            <option value="blank" disabled>Symbol</option>
+            <option value="{{shares}}" selected>{{shares}}</option>
+        </select>
+        {% else %}
+            <input type="text" name="symbol" placeholder="Stock" autofocus autocomplete="off">
+        {% endif %}
+        {% if quantity != NONE %}
+            <input type="disabled" name="shares" placeholder="{{quantity}}" value="{{quantity}}">
+        {% else %}
+            <input type="number" name="shares" placeholder="Quantity">
+        {% endif %}
+           <button type="submit">Buy</button>
+    </form>
+{% endblock %}

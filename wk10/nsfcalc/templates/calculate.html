@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Calculate
+{% endblock %}
+
+{% block main %}
+    <h1>{{username}}'s Savings:</h1>
+    <div>
+        TOTAL PAY (Inclusive Of 2nd Year Bonus): {{total_pay | sgd}}
+        <br>
+        AVERAGE MONTHLY SALARY: {{ave_pay | sgd}}
+    </div>
+    <br>
+    <h5 strong class="center_object">ONLY INPUT IN ONE FIELD BELOW</h5>
+    <div>
+        <form method="post" action="/savings">
+            <div>
+                <label for="Monthly Savings Target($)">Monthly Savings Target (Dollar Amount)</label>
+                $<input type="number" class="form-control center_object" name="savings_nominal" placeholder="Dollar Amount" style="width:50%">
+            </div>
+            <br>
+            <div>
+                <label for="Monthly Savings Target(%)">Monthly Savings Target (Percentage Amount)</label>
+                <select name="savings_percentage" class="form-select form-select-md center_object" style="width:50%">
+                    <option disabled selected>Percentage Amount</option>
+                    {% for i in range(1, 10) %}
+                        <option value="{{i*10}}">{{i*10}} %</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <br>
+            <button class="btn btn-success" type="submit">CALCULATE</button>
+        </form>
+        <br>
+        <form action="/logout">
+            <button class="btn btn-danger center_object" type="submit">RESET</button>
+        </form>
+    </div>
+{% endblock %}

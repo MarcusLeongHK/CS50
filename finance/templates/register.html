@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    {#create a form to enter username and password twice#}
+    <div>
+        <form autocomplete = "off" autofocus action = "/register" method = "post">
+            <tr>
+                <th>
+                    <input name = "username" type = "text" placeholder = "Username">
+                </th>
+                <th>
+                    <input name = "password" type = "password" placeholder = "Password">
+                </th>
+                <th>
+                    <input name = "confirmation" type = "password" placeholder = "Confirm Password">
+                </th>
+                <th>
+                    <button type = "submit">Register</button>
+                </th>
+
+            </tr>
+        </form>
+    </div>
+
+{% endblock %}

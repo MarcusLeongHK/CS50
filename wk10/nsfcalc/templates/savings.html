@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Savings
+{% endblock %}
+
+{% block main %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+    ['Category', 'Money'],
+    ['Savings', {{total_savings|tojson}}],
+    ['Expenditure', {{total_expenditure|tojson}}]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Finances', 'width':400, 'height':350};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script>
+    <table class="table center_object" style="width:50%">
+        <h2>{{username}}'s Savings</h2>
+        <tr>
+            <td>Total Pay [Inclusive Of 2nd Year Bonus]</td>
+            <td>{{total_pay | sgd}}</td>
+        </tr>
+        <tr>
+            <td>Total Savings:</td>
+            <td>{{total_savings | sgd}}</td>
+        </tr>
+        <tr>
+            <td>Percentage Of Income Saved:</td>
+            <td>{{'%0.2f' % proportion | float}}%</td>
+        </tr>
+        <tr>
+            <td>Average Monthly Pay</td>
+            <td>{{ave_pay | sgd}}</td>
+        </tr>
+        <tr>
+            <td>Monthly Savings:</td>
+            <td>{{monthly_savings | sgd}}</td>
+        </tr>
+    </table>
+{% endblock %}
